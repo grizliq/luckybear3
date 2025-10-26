@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Bear Casino</title>
+    
+    <style>
+        /* =========================================
+         ПОДКЛЮЧЕНИЕ ШРИФТОВ
+         ========================================= */
+        @font-face {
+            font-family: 'Widocktrial';
+            src: url('fonts/Widocktrialbold.woff2') format('woff2'),
+                 url('fonts/Widocktrialbold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'FindSansPro';
+            src: url('fonts/FindSansPro-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        /* =========================================
+         ОСНОВНЫЕ СТИЛИ И ПАЛИТРА
+         ========================================= */
+        :root {
+            --color-bg: #131315; 
+            --color-card-bg: #1F1F23; 
+            --color-blue: #2b86f0; 
+            --color-text-primary: #ffffff; 
+            --color-text-secondary: #8A8A8A; 
+            --font-heading: 'Widocktrial', sans-serif; 
+            --font-body: 'FindSansPro', sans-serif;
+            --card-border-radius: 24px;
+        }
+        
+        /* Плавная прокрутка по якорям */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0d0d0d; /* Сплошной черный фон */
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/fon.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            filter: blur(8px); /* Усиленный размытие фона */
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin: 0 0 60px 0;
+            line-height: 1.3;
+        }
+
+        .section-title .text-blue {
+            color: var(--color-blue);
+        }
+
+        /* =========================================
+         БЛОК 1: ШАПКА (ИЗ КОДА 1)
+         ========================================= */
+        .site-header {
+    width: 100%;
+    padding: 10px 0;
+    position: relative;
+    z-index: 10;
+    
+}
+
+.main-nav {
+    display: flex;
+    /* ИЗМЕНЕНО: space-between раздвинет 3 элемента */
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    /* Убрали gap, он будет на логотипе */
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 35px;
+    
+    /* ДОБАВЛЕНО: Заставляет списки расти и занимать равное место */
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+/* ДОБАВЛЕНО: Выравнивает левый список по правому краю (ближе к лого) */
+.nav-left {
+    justify-content: flex-end;
+}
+
+/* ДОБАВЛЕНО: Выравнивает правый список по левому краю (ближе к лого) */
+.nav-right {
+    justify-content: flex-start;
+}
+
+.nav-list a {
+    color: var(--color-text-primary); /* Белый цвет */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+}
+
+.nav-list a:hover {
+    color: #3b82f6;
+}
+
+.logo {
+    text-decoration: none;
+    /* ДОБАВЛЕНО: Запрещает логотипу сжиматься или растягиваться */
+    flex-grow: 0;
+    flex-shrink: 0;
+    /* ДОБАВЛЕНО: Создает отступы по бокам, заменяя gap */
+    padding: 0 40px; 
+}
+
+.logo img {
+    height: 55px;
+    width: auto;
+    display: block;
+}
+
+        /* --- Герой-секция (Заголовок) (ИЗ КОДА 1) --- */
+        .hero-section {
+            text-align: center;
+            margin: 60px 0 50px 0; 
+        }
+
+        .hero-title {
+            font-family: 'Widocktrial', sans-serif;
+            font-size: 44px; 
+            font-weight: 700;
+            line-height: 1.25;
+            margin: 0;
+            text-transform: uppercase; 
+            color: white;
+        }
+
+        .hero-title .line-blue {
+            color: #3b82f6; 
+        }
+        
+        /* =========================================
+         БЛОК 2: БОНУСНЫЕ КАРТОЧКИ (ИЗ КОДА 1)
+         ========================================= */
+        .bonus-section {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            padding-bottom: 50px; 
+            /* Добавлены стили для совместимости с z-index фона */
+            position: relative;
+            z-index: 2;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 100%;
+            align-items: start; 
+        }
+
+        .bonus-card {
+            position: relative; 
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .card-bg {
+            width: 100%;
+            height: auto;
+            display: block; 
+            border-radius: 16px; 
+        }
+        
+        .bonus-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding-top: 55px; 
+            box-sizing: border-box;
+        }
+        
+        .icon-wrapper {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 25px; 
+        }
+
+        .bonus-icon {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .text-container {
+            position: relative;
+            min-height: 120px; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bonus-state {
+            position: absolute;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .bonus-default-state {
+            opacity: 1;
+            z-index: 2;
+        }
+        .bonus-default-state .bonus-title-simple {
+            font-family: 'Widocktrial', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            filter: none; 
+            display: block;
+            margin-bottom: 5px; 
+        }
+        .bonus-default-state .bonus-details {
+            filter: blur(8px); 
+            opacity: 0.5;
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .bonus-hover-state {
+            opacity: 0; 
+            z-index: 1;
+        }
+
+        .bonus-card.inactive:hover .icon-open {
+            opacity: 1; 
+        }
+        .bonus-card.inactive:hover .icon-closed {
+            opacity: 0; 
+        }
+        .bonus-card.inactive:hover .bonus-default-state {
+            opacity: 0; 
+            z-index: 1;
+        }
+        .bonus-card.inactive:hover .bonus-hover-state {
+            opacity: 1; 
+            z-index: 2;
+        }
+        
+        .bonus-default-state .bonus-title,
+        .bonus-hover-state .bonus-title {
+            font-family: 'Widocktrial', sans-serif;
+            font-size: 22px; 
+            font-weight: 700;
+            line-height: 1.2;
+            display: block; 
+        }
+        
+        .bonus-default-state .bonus-subtitle,
+        .bonus-hover-state .bonus-subtitle,
+        .bonus-default-state .bonus-subtitle-fs,
+        .bonus-hover-state .bonus-subtitle-fs {
+            font-family: 'Widocktrial', sans-serif;
+            font-size: 22px; 
+            font-weight: 700;
+            line-height: 1.2;
+            display: block;
+            margin-top: 5px; 
+        }
+        
+        .bonus-default-state .bonus-extra,
+        .bonus-hover-state .bonus-extra {
+            font-family: 'FindSansPro', sans-serif;
+            font-size: 15px; 
+            font-weight: 400; 
+            color: #c0c0c0;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .bonus-card.active .icon-open { opacity: 1; }
+        .bonus-card.active .icon-closed { opacity: 0; }
+        .bonus-card.active .bonus-default-state { display: none; } 
+        .bonus-card.active .bonus-hover-state {
+            opacity: 1; 
+            z-index: 1;
+        }
+        
+        .bonus-card.inactive .icon-open { opacity: 0; }
+        .bonus-card.inactive .icon-closed { opacity: 1; }
+        
+
+        .bonus-button {
+            font-family: 'FindSansPro', sans-serif;
+            margin-top: 30px;
+            padding: 14px 35px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 400; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bonus-button:hover {
+            background-color: #0b5ed7;
+            transform: scale(1.03);
+        }
+
+
+        /* =========================================
+         БЛОК 3: ИГРЫ (СЛАЙДЕР) (Остался от Кода 2)
+         ========================================= */
+        
+         .slider-section-wrapper {
+            font-family: var(--font-body);
+            background-color: transparent; /* Убран фон, виден body */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px; 
+            margin: 0;
+            overflow: hidden; 
+            /* Добавлены стили для совместимости с z-index фона */
+            position: relative;
+            z-index: 2;
+         }
+
+        .slider-section-wrapper .title {
+            font-size: 2.8rem; /* ИЗМЕНЕНО: было 32px (для одного размера) */
+            font-weight: 800;
+            color: var(--color-text-primary); 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 30px; 
+            font-family: var(--font-heading); 
+        }
+
+        .slider-section-wrapper .title span {
+            color: var(--color-blue); 
+        }
+
+        .slider-section-wrapper .slider-container {
+            position: relative;
+            width: 100%;
+            height: 330px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            overflow: hidden; 
+        }
+
+        .slider-section-wrapper .slider-item {
+            background-color: #1F1F23; 
+            width: 300px; 
+            height: 300px; 
+            border-radius: 30px; 
+            position: absolute;
+            opacity: 0;
+            transition: transform 1.2s ease-in-out, 
+                          opacity 1.2s ease-in-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform-origin: center center; 
+            overflow: hidden; /* <-- ДОЛЖНО БЫТЬ ТУТ */
+        }
+        
+
+        /* Стили для самих изображений внутри карточек */
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* <-- И ЭТО ТУТ */
+        }
+
+        .slider-section-wrapper .slider-item.center { transform: translateX(0) scale(1.0); opacity: 1; z-index: 5; }
+        .slider-section-wrapper .slider-item.left-1 { transform: translateX(-290px) scale(0.67); opacity: 0.7; z-index: 4; }
+        .slider-section-wrapper .slider-item.right-1 { transform: translateX(290px) scale(0.67); opacity: 0.7; z-index: 4; }
+        .slider-section-wrapper .slider-item.left-2 { transform: translateX(-490px) scale(0.45); opacity: 0.4; z-index: 3; }
+        .slider-section-wrapper .slider-item.right-2 { transform: translateX(490px) scale(0.45); opacity: 0.4; z-index: 3; }
+        .slider-section-wrapper .slider-item.hidden-left { transform: translateX(-620px) scale(0.30); opacity: 0; z-index: 1; }
+        .slider-section-wrapper .slider-item.hidden-right { transform: translateX(620px) scale(0.30); opacity: 0; z-index: 1; }
+
+        .slider-section-wrapper .slider-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px; 
+        }
+
+        .slider-section-wrapper .slider-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; 
+            background-color: var(--color-blue); 
+            color: white;
+            border: none;
+            border-radius: 25px; 
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: var(--font-body); 
+            text-decoration: none;
+        }
+
+        .slider-section-wrapper .slider-btn:hover {
+            background-color: #1a6ac4;
+        }
+
+        .slider-section-wrapper .slider-btn img {
+            width: 20px; 
+            height: 20px; 
+            object-fit: contain; 
+            filter: brightness(0) invert(1); 
+        }
+
+        /* =========================================
+         БЛОК 4: ПРЕИМУЩЕСТВА (Остался от Кода 2)
+         ========================================= */
+        .features-section {
+            padding: 80px 0;
+            background-color: transparent; 
+            /* Добавлены стили для совместимости с z-index фона */
+            position: relative;
+            z-index: 2;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            background-color: #1a1a1a; 
+            border: 1px solid transparent;
+            padding: 30px;
+            border-radius: var(--card-border-radius);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(43, 134, 240, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: #2a2f40; 
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin: 0;
+            color: var(--color-blue);
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* =========================================
+         БЛОК 5: ФУТЕР 
+         ========================================= */
+        .footer-section {
+            padding: 60px 0 30px 0;
+            background-color: #0d0d0d; 
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            /* Добавлены стили для совместимости с z-index фона */
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            width: 150px;
+            height: 40px;
+            margin-bottom: 25px;
+        }
+        
+        .footer-responsible-text {
+            color: var(--color-text-primary); 
+            opacity: 0.7; 
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-nav a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-nav a:hover {
+            color: var(--color-blue);
+        }
+        
+        .footer-divider {
+            border: none;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+        
+        .footer-seo-block {
+            font-size: 0.8rem;
+            color: var(--color-text-primary); 
+            opacity: 0.6; 
+            line-height: 1.7;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+        
+        .footer-copyright {
+            font-size: 0.9rem;
+            color: var(--color-text-primary); 
+            opacity: 0.7; 
+        }
+        
+        /* =========================================
+         АДАПТИВНОСТЬ 
+         ========================================= */
+        
+       
+        @media (max-width: 992px) { 
+            .main-nav {
+                flex-wrap: wrap; 
+                justify-content: center;
+                gap: 20px 30px; 
+            }
+            .nav-list {
+                gap: 25px; 
+            }
+            .logo {
+                order: -1; 
+                margin: 10px 0; 
+            }
+            .hero-title {
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bonus-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 576px) { 
+            .main-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-list {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .logo {
+                margin-bottom: 15px;
+            }
+            .hero-title {
+                font-size: 28px;
+            }
+            .bonus-grid {
+                grid-template-columns: 1fr; 
+                max-width: 300px;
+            }
+        }
+
+       
+        @media (max-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Стили для старой шапки удалены */
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-nav {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            /* Стиль для .bonus-grid управляется @media из Кода 1 */
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .slider-section-wrapper .slider-buttons-container {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            /* Стиль для .bonus-grid управляется @media из Кода 1 */
+        }
+
+        @media (max-width: 480px) {
+            /* Стиль для .bonus-grid управляется @media из Кода 1 */
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <nav class="main-nav">
+    <ul class="nav-list nav-left">
+        <li><a href="#games">Игры</a></li>
+        <li><a href="#bonuses">Бонусы</a></li>
+    </ul>
+    <a href="#" class="logo">
+        <img src="images/logo-full.png" alt="Lucky Bear Logo">
+    </a>
+    <ul class="nav-list nav-right">
+        <li><a href="#features">Преимущества</a></li>
+        <li><a href="#about">О нас</a></li>
+    </ul>
+</nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h1 class="hero-title">
+                <span class="line-blue">LUCKY BEAR КАЗИНО</span><br>
+                ТВОЯ БЕРЛОГА КРУПНЫХ<br>
+                ВЫИГРЫШЕЙ
+            </h1>
+        </section>
+
+        <section id="bonuses" class="bonus-section">
+            <div class="bonus-grid">
+                <div class="bonus-card active">
+                    <img src="images/bluecard.png" alt="Синяя карта" class="card-bg">
+                    <div class="card-content-wrapper">
+                        <div class="icon-wrapper">
+                            <img src="images/boxc.png" alt="Закрытый сундук" class="bonus-icon icon-closed">
+                            <img src="images/boxo.png" alt="Открытый сундук" class="bonus-icon icon-open">
+                        </div>
+                        <div class="text-container">
+                            <div class="bonus-state bonus-hover-state">
+                                <span class="bonus-title">БОНУС</span>
+                                <span class="bonus-subtitle">ДО 360%</span>
+                                <span class="bonus-extra">на 1 пополнение</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-card inactive">
+                    <img src="images/blackcard.png" alt="Черная карта" class="card-bg">
+                    <div class="card-content-wrapper">
+                        <div class="icon-wrapper">
+                            <img src="images/boxc.png" alt="Закрытый сундук" class="bonus-icon icon-closed">
+                            <img src="images/boxo.png" alt="Открытый сундук" class="bonus-icon icon-open">
+                        </div>
+                        <div class="text-container">
+                            <div class="bonus-state bonus-default-state">
+                                <span class="bonus-title-simple">БОНУС</span>
+                                <div class="bonus-details">
+                                    <span class="bonus-title">до 360%</span>
+                                    <span class="bonus-extra">на 2 пополнение</span>
+                                </div>
+                            </div>
+                            <div class="bonus-state bonus-hover-state">
+                                <span class="bonus-title">БОНУС</span>
+                                <span class="bonus-subtitle">ДО 360%</span>
+                                <span class="bonus-extra">на 2 пополнение</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-card inactive">
+                    <img src="images/blackcard.png" alt="Черная карта" class="card-bg">
+                    <div class="card-content-wrapper">
+                        <div class="icon-wrapper">
+                            <img src="images/boxc.png" alt="Закрытый сундук" class="bonus-icon icon-closed">
+                            <img src="images/boxo.png" alt="Открытый сундук" class="bonus-icon icon-open">
+                        </div>
+                        <div class="text-container">
+                            <div class="bonus-state bonus-default-state">
+                                <span class="bonus-title-simple">БОНУС</span>
+                                <div class="bonus-details">
+                                    <span class="bonus-title">до 360%</span>
+                                    <span class="bonus-subtitle-fs">+ 50 FS</span>
+                                    <span class="bonus-extra">на 3 пополнение</span>
+                                </div>
+                            </div>
+                            <div class="bonus-state bonus-hover-state">
+                                <span class="bonus-title">БОНУС</span>
+                                <span class="bonus-subtitle">ДО 360%</span>
+                                <span class="bonus-subtitle-fs">+ 50 FS</span>
+                                <span class="bonus-extra">на 3 пополнение</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bonus-card inactive">
+                    <img src="images/blackcard.png" alt="Черная карта" class="card-bg">
+                    <div class="card-content-wrapper">
+                        <div class="icon-wrapper">
+                            <img src="images/boxc.png" alt="Закрытый сундук" class="bonus-icon icon-closed">
+                            <img src="images/boxo.png" alt="Открытый сундук" class="bonus-icon icon-open">
+                        </div>
+                        <div class="text-container">
+                            <div class="bonus-state bonus-default-state">
+                                <span class="bonus-title-simple">БОНУС</span>
+                                <div class="bonus-details">
+                                    <span class="bonus-title">до 360%</span>
+                                    <span class="bonus-subtitle-fs">+ 200 FS</span>
+                                    <span class="bonus-extra">на 4 пополнение</span>
+                                </div>
+                            </div>
+                            <div class="bonus-state bonus-hover-state">
+                                <span class="bonus-title">БОНУС</span>
+                                <span class="bonus-subtitle">ДО 360%</span>
+                                <span class="bonus-subtitle-fs">+ 200 FS</span>
+                                <span class="bonus-extra">на 4 пополнение</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="https://luckybear.vip/5t332n"><button class="bonus-button">Забрать бонус</button></a>
+        </section>
+    </main>
+    
+    <section id="games" class="slider-section-wrapper">
+        <h1 class="title">
+            Найди  <span>свою</span> игру
+        </h1>
+    
+    <div class="slider-container">
+        <div class="slider-item"><img src="images/game1.png" alt="Игра 1"></div>
+        <div class="slider-item"><img src="images/game2.png" alt="Игра 2"></div>
+        <div class="slider-item"><img src="images/game3.png" alt="Игра 3"></div>
+        <div class="slider-item"><img src="images/game4.png" alt="Игра 4"></div>
+        <div class="slider-item"><img src="images/game5.png" alt="Игра 5"></div>
+        <div class="slider-item"><img src="images/game6.png" alt="Игра 6"></div>
+        <div class="slider-item"><img src="images/game7.png" alt="Игра 7"></div>
+        <div class="slider-item"><img src="images/game8.png" alt="Игра 8"></div>
+        <div class="slider-item"><img src="images/game9.png" alt="Игра 9"></div>
+        <div class="slider-item"><img src="images/game10.png" alt="Игра 10"></div>
+    </div>
+    
+        <div class="slider-buttons-container">
+    <a href="https://luckybear.vip/5t332n" class="slider-btn btn-website">
+        <img src="images/www.png" alt="Сайт">
+        <span>Играть на сайте</span>
+    </a>
+    <a href="https://t.me/Lucky_Bear_CashWin_bot/app?startapp=bXN0PTB4MWFhNmJiYTFkJm09Uml6eiZjPXNpdGUz" class="slider-btn btn-telegram">
+        <img src="images/tgw.png" alt="Telegram">
+        <span>Играть в TG</span>
+    </a>
+</div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">ПОЧЕМУ ИГРОКИ ВЫБИРАЮТ НАС</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon-placeholder">
+                           <img src="images/icon-payouts.png" alt="Иконка" style="width: 50px;">
+                        </div>
+                        <h3>Быстрые выплаты</h3>
+                    </div>
+                    <p>Моментальное пополнение и быстрый вывод средств без лишних задержек и комиссий.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon-placeholder">
+                           <img src="images/icon-support.png" alt="Иконка" style="width: 50px;">
+                        </div>
+                        <h3>Поддержка 24/7</h3>
+                    </div>
+                    <p>Наша команда поддержки на связи круглосуточно и готова помочь с любым вашим вопросом.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon-placeholder">
+                           <img src="images/icon-games.png" alt="Иконка" style="width: 50px;">
+                        </div>
+                        <h3>Большой выбор игр</h3>
+                    </div>
+                    <p>Тысячи слотов и лайв-игр от лучших мировых провайдеров, которые вам точно понравятся.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon-placeholder">
+                           <img src="images/icon-bonus.png" alt="Иконка" style="width: 50px;">
+                        </div>
+                        <h3>Щедрые бонусы</h3>
+                    </div>
+                    <p>Крупные приветственные пакеты, регулярные акции и кэшбэк для всех наших игроков.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon-placeholder">
+                           <img src="images/icon-security.png" alt="Иконка" style="width: 50px;">
+                        </div>
+                        <h3>Безопасность данных</h3>
+                    </div>
+                    <p>Используем надежное шифрование для 100% защиты ваших личных данных и финансов.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon-placeholder">
+                           <img src="images/icon-mobile.png" alt="Иконка" style="width: 50px;">
+                        </div>
+                        <h3>Удобная моб. версия</h3>
+                    </div>
+                    <p>Играйте где угодно и когда угодно с нашей полностью адаптированной мобильной версией.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="about" class="footer-section">
+        <div class="container">
+            <a href="https://t.me/Lucky_Bear_CashWin_bot/app?startapp=bXN0PTB4MWFhNmJiYTFkJm09Uml6eiZjPXNpdGUz" class="footer-logo">
+                <img src="images/logo.png" alt="Lucky Bear Logo" style="height: 40px;">
+            </a>
+
+            <p class="footer-responsible-text">Играйте ответственно, только для лиц старше 18 лет</p>
+
+            <nav class="footer-nav">
+                <a href="https://luckybear.vip/5t332n">VIP-казино</a>
+                <a href="https://luckybear.vip/5t332n">Слоты</a>
+                <a href="https://luckybear.vip/5t332n">Бонусы</a>
+                <a href="https://luckybear.vip/5t332n">О нас</a>
+            </nav>
+
+            <hr class="footer-divider">
+            
+            <div class="footer-seo-block">
+                <strong>Популярные запросы:</strong> казино лаки бир, лаки бир, lucky bear casino, лаки бир официальный сайт, лаки бир вход, lucky bear официальный сайт, казино lucky bear, лаки бир регистрация, lucky bear вход, лаки бир сайт, laki bir, лаки бир играть онлайн, lucky bear играть, лаки бир зеркало, lucky bear зеркало рабочее, лаки бир бонусы, lucky bear casino регистрация, игровые автоматы лаки бир, слоты lucky bear, мобильная версия лаки бир, скачать lucky bear, промокоды лаки бир, lucky bear casino bonuses, промокод на лаки бир, бонус код lucky bear, lucky bear free spins, lucky bear отзывы, казино лаки бир зеркало, lucky bear online casino, лаки бир рабочее зеркало.
+            </div>
+
+            <p class="footer-copyright">© 2025 LuckyBear Casino (Лаки Бир). Все права защищены.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderWrapper = document.querySelector('.slider-section-wrapper');
+            if (!sliderWrapper) return;
+
+            const items = sliderWrapper.querySelectorAll('.slider-item');
+            if (items.length === 0) return;
+
+            let currentIndex = 0;
+            const totalItems = items.length;
+
+            function updateSlider() {
+                items.forEach((item, index) => {
+                    item.classList.remove('center', 'left-1', 'left-2', 'right-1', 'right-2', 'hidden-left', 'hidden-right');
+
+                    let newIndex = (index - currentIndex + totalItems) % totalItems;
+
+                    if (newIndex === 0) {
+                        item.classList.add('center'); 
+                    } else if (newIndex === 1) {
+                        item.classList.add('right-1'); 
+                    } else if (newIndex === 2) {
+                        item.classList.add('right-2'); 
+                    } else if (newIndex === totalItems - 1) {
+                        item.classList.add('left-1'); 
+                    } else if (newIndex === totalItems - 2) {
+                        item.classList.add('left-2');
+                    } else if (newIndex === totalItems - 3) {
+                        item.classList.add('hidden-left'); 
+                    } else {
+                        item.classList.add('hidden-right');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateSlider();
+            }
+
+            setInterval(nextSlide, 3000);
+            updateSlider();
+        });
+    </script>
+
+</body>
+</html>
